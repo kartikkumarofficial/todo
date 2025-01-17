@@ -98,7 +98,7 @@ class _TaskPageState extends State<TaskPage> {
                     title: Text(task['name']),
                     onTap: () {
                       // Get.to()
-
+//todo add navigation with 3 arguements
                     },
                   );
                 },
