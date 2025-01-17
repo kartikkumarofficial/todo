@@ -61,7 +61,7 @@ class _TaskPageState extends State<TaskPage> {
       ),
       body:
       Container(
-        color: Color.fromRGBO(71, 240, 255, 1.0),
+        // color: Color.fromRGBO(71, 240, 255, 1.0),
         height: double.infinity,
         width: double.infinity,
         child: StreamBuilder<List<Map<String, dynamic>>>(
