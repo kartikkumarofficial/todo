@@ -28,13 +28,14 @@ class _TaskPageState extends State<TaskPage> {
     }).toList());
   }
 
-  Future<void> deleteTask () async{
+  Future<void> deleteTask (String tasksId) async{
     try{
-      await FirebaseFirestore.instance.collection('tasks').doc(taskId]).delete();
+      await FirebaseFirestore.instance.collection('tasks').doc(tasksId).delete();
       Get.showSnackbar(
         GetSnackBar(
-          title: 'Task',
+          // title: 'Task',
           message: 'Task Deleted',
+          duration: Duration(seconds: 2),
         )
       );
 
@@ -55,35 +56,58 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(71, 240, 255, 1.0),
         title: Text('To Do List'),
       ),
-      body: StreamBuilder<List<Map<String, dynamic>>>(
-        stream: Tasks(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No tasks available. Add a task!'));
-          } else {
-            final tasks = snapshot.data!;
-            return ListView.builder(
-              itemCount: tasks.length,
-              itemBuilder: (context, index) {
-                final task = tasks[index];
-                return ListTile(
-                  title: Text(task['name']),
-                  onTap: () {
-
+      body:
+      Container(
+        color: Color.fromRGBO(71, 240, 255, 1.0),
+        height: double.infinity,
+        width: double.infinity,
+        child: StreamBuilder<List<Map<String, dynamic>>>(
+          stream: Tasks(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              // return Center(child: Text('No tasks available. Add a task!'));
+              return Padding(
+                padding: EdgeInsets.all(10),
+                child: ListTile(
+                  // tileColor: Color.fromRGBO(71, 240, 255, 1.0),
+                  title: Text('Add a task'),
+                  onTap: (){
+                    Get.to(NewTaskPage());
                   },
-                );
-              },
-            );
-          }
-        },
+                ),
+              );
+            } else {
+              final tasks = snapshot.data!;
+              return ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  return ListTile(
+                    trailing: IconButton(
+                        onPressed: (){
+                          deleteTask(task['id']);
+                        },
+                        icon: Icon(Icons.delete)),
+                    title: Text(task['name']),
+                    onTap: () {
+
+                    },
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromRGBO(71, 240, 255, 1.0),
         onPressed: () {
           // showbottomsheet();
           Get.to(NewTaskPage());

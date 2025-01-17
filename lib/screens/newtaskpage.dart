@@ -61,12 +61,20 @@ class _NewTaskPageState extends State<NewTaskPage> {
             SizedBox(height: 10),
             ElevatedButton(
                 onPressed: ()async{
+
                   CollectionReference collref = FirebaseFirestore.instance.collection('tasks');
                   try{
                     await collref.add({
                       'task':taskController.text,
                       'timestamp':FieldValue.serverTimestamp(),
+
                     });
+                    Get.showSnackbar(
+                        GetSnackBar(
+                          message: 'Task Added',
+                          duration: Duration(seconds: 2),
+                        )
+                    );
                   }
                   catch(e){
                     Get.showSnackbar(
