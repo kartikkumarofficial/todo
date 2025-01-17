@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:todo/auth/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:todo/screens/taskpage.dart';
 import 'firebase_options.dart';
 
 void main() async {
