@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 
+
  showbottomsheet(){
    Get.bottomSheet(
 
@@ -33,3 +34,8 @@ import 'package:flutter/material.dart';
          ),
        )
    );}
+
+
+class Utils {
+
+}
