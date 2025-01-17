@@ -18,7 +18,7 @@ class _TaskPageState extends State<TaskPage> {
         .collection('tasks')
         .orderBy('timestamp',descending: true)
         .snapshots() //chatgpt nhi kiya :)
-        .
+        .map()
 
 }
   @override
