@@ -97,6 +97,7 @@ class _TaskPageState extends State<TaskPage> {
                         icon: Icon(Icons.delete)),
                     title: Text(task['name']),
                     onTap: () {
+                      // Get.to()
 
                     },
                   );

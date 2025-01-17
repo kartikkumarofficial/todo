@@ -31,7 +31,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
       try{
         await FirebaseFirestore.instance.collection('tasks').doc(widget.taskId)
             .update({
-
+          'task':_taskController.text
         });
       }
       catch(e){
@@ -53,8 +53,39 @@ class _EditTaskPageState extends State<EditTaskPage> {
       appBar: AppBar(
         title: Text('Edit Task'),
       ),
-      body: Center(
-        child: Text('Edit your task here!'),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formkey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                controller: _taskController,
+                decoration: InputDecoration(
+                  labelText: 'Edit Task',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.task),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a task';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16),
+
+              SizedBox(height: 32),
+              Center(
+                child: ElevatedButton(
+                  onPressed: updateTask,
+                  child: Text('Saved Changes'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
