@@ -19,11 +19,10 @@ class _NewTaskPageState extends State<NewTaskPage> {
       String task = taskController.text;
       Get.showSnackbar(
         GetSnackBar(
-          title: 'Task',
+          // title: 'Task',
           message: 'Task Saved : $task',
         )
       );
-
       taskController.clear();
 
     }
@@ -46,7 +45,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 controller: taskController,
                 key:formKey,
                         decoration: InputDecoration(
-              labelText: 'Task',
+              labelText: 'Add task',
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.task),
                         ),
