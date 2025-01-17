@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/screens/edittaskpage.dart';
 import 'package:todo/screens/newtaskpage.dart';
 import 'package:todo/widgets/bottomsheet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -97,8 +98,10 @@ class _TaskPageState extends State<TaskPage> {
                         icon: Icon(Icons.delete)),
                     title: Text(task['name']),
                     onTap: () {
-                      // Get.to()
-//todo add navigation with 3 arguements
+                      Get.to(EditTaskPage(
+                          taskId:task['id'] ,
+                          initialTask: task['name']));
+
                     },
                   );
                 },
