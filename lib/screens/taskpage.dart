@@ -18,7 +18,13 @@ class _TaskPageState extends State<TaskPage> {
         .collection('tasks')
         .orderBy('timestamp',descending: true)
         .snapshots() //chatgpt nhi kiya :)
-        .map()
+        .map((snapshot))=> snapshot.docs.map((doc){
+          final data = doc.data();
+          return{
+            'id': doc.id,
+            'name':data['task']??'Remainder'
+          };
+    }).toList();
 
 }
   @override
