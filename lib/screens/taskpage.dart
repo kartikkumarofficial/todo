@@ -13,18 +13,18 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  Stream<List> Tasks(){
+  Stream<List<Map<String,dynamic>>> Tasks(){
     FirebaseFirestore.instance
         .collection('tasks')
         .orderBy('timestamp',descending: true)
         .snapshots() //chatgpt nhi kiya :)
-        .map((snapshot))=> snapshot.docs.map((doc){
+        .map((snapshot)=> snapshot.docs.map((doc){
           final data = doc.data();
           return{
             'id': doc.id,
             'name':data['task']??'Remainder'
           };
-    }).toList();
+    }).toList());
 
 }
   @override
@@ -33,7 +33,25 @@ class _TaskPageState extends State<TaskPage> {
       appBar: AppBar(
         title: Text('To Do List'),
       ),
-      body: ,
+      body: StreamBuilder(
+
+          stream: Tasks(),
+          builder:(context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+    return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      return ListTile(
+        onTap: (){},
+        //todo listile to add task
+      );
+    }
+
+    } else {
+    final contacts = snapshot.data!;
+
+          }, ),
       floatingActionButton: FloatingActionButton(
         onPressed:(){
           showbottomsheet();
